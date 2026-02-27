@@ -1,0 +1,54 @@
+name: Broken_Readiness_Probe
+
+difficulty: medium
+category: kubernetes
+
+tags:
+  - kubernetes
+  - debugging
+  - readiness-probe
+  - devops
+
+prompt: |
+  The Bleater platform’s MinIO UI service is returning intermittent
+  503 Service Unavailable errors.
+
+  The Kubernetes Deployment exists and pods are running,
+  but the Service has no ready endpoints.
+
+  Investigation reveals configuration drift introduced an
+  incorrect readiness probe.
+
+  Your task:
+
+  - Diagnose why pods are not becoming Ready
+  - Fix the readiness probe configuration
+  - Patch the existing Deployment (DO NOT recreate it)
+  - Restore service health
+
+  Deployment:
+    Name: bleater-minio-ui
+    Namespace: bleater
+
+  Correct readiness configuration:
+    Path: /ready
+    Port: 9001
+
+  Constraints:
+    - Do NOT delete the deployment
+    - Do NOT recreate resources
+    - Preserve Deployment UID
+
+description: |
+  Fix a Kubernetes Deployment suffering from configuration drift.
+  The readiness probe is misconfigured, preventing pods from becoming Ready.
+  Patch the deployment without recreating it and restore service health.
+
+setup_script: setup.sh
+solution_script: solution.sh
+grader_script: grader.py
+
+timeout_sec: 1800
+
+evaluation:
+  type: apex
